@@ -3,13 +3,15 @@ angular.module('myApp').service('mainService', function($http, $q){
 
     this.getData = function(){
       var deferred = $q.defer();
+
       $http({
         method:'GET',
         url: apiUrl
-      }).then function((response){
+      }).then(function(response){
         var data = response.data;
         deferred.resolve(data);
       })
+      
       return deferred.promise;
     }
   })
