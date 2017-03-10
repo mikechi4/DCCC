@@ -1,9 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+
+$font: 'Oswald', sans-serif;
 body{
-  // background: #ECE2D0;
+  background: #E6E6E6;
+  font-family: $font;
+}
+.content-area{
+  background: #FFFFFF;
 }
 .title-splash{
+  text-align: center;
+  background: #489FDF;
+  margin-bottom:20px;
+  padding: 15px;
+  color: white;
 
 }
+
 
 .cumulative-total{
   margin-bottom: 20px;
@@ -16,15 +29,21 @@ body{
 .job-search{
   display: flex;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  background: #1D9D73;
   .job-search-title{}
-  .job-search-box{}
+  .job-search-box input{
+    color: black;
+  }
 }
 
 .main-content{
+  padding: 10px;
   margin-bottom: 20px;
   border-bottom: 1px solid black;
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
   .main-content-job-title{
     text-align: center;
   }

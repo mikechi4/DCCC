@@ -4,67 +4,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="/public/dist/styles.css">
     <title>City of Seattle Wages</title>
   </head>
   <body ng-controller="mainCtrl" class="container">
-    <div class="title-splash jumbotron">
+    <div class="title-splash">
       <h2>City of Seattle Wages:  Comparison by Gender - All Job Classifications</h2>
+      <h2><i class="fa fa-female" aria-hidden="true"></i>  <i class="fa fa-male" aria-hidden="true"></i></h2>
       <h6>Average pay comparison of male and female wages by job classification (except Library job classes)</h6>
     </div>
-    <div class="cumulative-total">
-      <h3 class="cumulative-total-title">Cumulative Total of Data. Avg Hourly Wage</h3>
-      <nvd3 options="options" data="values"></nvd3>
-    </div>
-    <div class="job-search">
-      <div class="job-search-title">
-        <h4>Jobs Surveyed</h4>
+    <div class="content-area">
+      <div class="cumulative-total">
+        <h3 class="cumulative-total-title">Cumulative Total of Data. Avg Hourly Wage</h3>
+        <nvd3 options="options" data="values"></nvd3>
       </div>
-      <div class="job-search-box">
-        <label>Search: <input ng-model="searchText"></label>
-      </div>
-    </div>
-    <div class="main-content container" ng-repeat="job in jobs | filter:searchText | startFrom: (currentPage - 1) * pageSize | limitTo: pageSize">
-      <h4 class="main-content-job-title">Job Title: {{job[0]}}</h4>
-      <table style="width:100%">
-        <tr>
-          <th>Description</th>
-          <th>Men</th>
-          <th>Women</th>
-          <th>Combined Avg</th>
-        </tr>
-        <tr>
-          <td>Avg Hourly Rate</td>
-          <td>${{job[4]}}</td>
-          <td>${{job[1]}}</td>
-          <td>${{job[7]}}<br></td>
-        </tr>
-        <tr>
-          <td>No. Employees</td>
-          <td>{{job[2]}}</td>
-          <td>{{job[5]}}</td>
-          <td>{{job[8]}}</td>
-        </tr>
-        <tr>
-          <td>Avg Months Employed</td>
-          <td>{{job[3]}}</td>
-          <td>{{job[6]}}</td>
-          <td>{{job[9]}}</td>
-        </tr>
-      </table> <br>
-      Ratio of women's hourly rate to men's hourly rate: {{job[10]}}% <br>
-      Notes: {{job[11]}} <br> <br>
-      <div class="graph-section">
-        <div class="show-graph-btn">
-          <button type="button" ng-click="show = !show">Click Here to See Data</button>
+      <div class="job-search">
+        <div class="job-search-title">
+          <h4>Jobs Surveyed <i class="fa fa-check" aria-hidden="true"></i></h4>
         </div>
-        <graph-directive job="job" ng-show="show"></graph-directive>
+        <div class="job-search-box">
+          <label>Search: <input ng-model="searchText"></label>
+        </div>
+      </div>
+      <div class="main-content" ng-repeat="job in jobs | filter:searchText | startFrom: (currentPage - 1) * pageSize | limitTo: pageSize">
+        <h4 class="main-content-job-title">Job Title: {{job[0]}}</h4>
+        <table style="width:100%">
+          <tr>
+            <th>Description</th>
+            <th>Men</th>
+            <th>Women</th>
+            <th>Combined Avg</th>
+          </tr>
+          <tr>
+            <td>Avg Hourly Rate</td>
+            <td>${{job[4]}}</td>
+            <td>${{job[1]}}</td>
+            <td>${{job[7]}}<br></td>
+          </tr>
+          <tr>
+            <td>No. Employees</td>
+            <td>{{job[2]}}</td>
+            <td>{{job[5]}}</td>
+            <td>{{job[8]}}</td>
+          </tr>
+          <tr>
+            <td>Avg Months Employed</td>
+            <td>{{job[3]}}</td>
+            <td>{{job[6]}}</td>
+            <td>{{job[9]}}</td>
+          </tr>
+        </table> <br>
+        Ratio of women's hourly rate to men's hourly rate: {{job[10]}}% <br>
+        Notes: {{job[11]}} <br> <br>
+        <div class="graph-section">
+          <div class="show-graph-btn">
+            <button type="button" ng-click="show = !show">Click Here to See Data</button>
+          </div>
+          <graph-directive job="job" ng-show="show"></graph-directive>
+        </div>
+      </div>
+      <div class="pagination">
+        <ul uib-pagination total-items="jobs.length" ng-model="currentPage" items-per-page="pageSize" max-size="maxSize" force-ellipses="true"></ul>
       </div>
     </div>
-    <div class="pagination">
-      <ul uib-pagination total-items="jobs.length" ng-model="currentPage" items-per-page="pageSize" max-size="maxSize" force-ellipses="true"></ul>  
-    </div>
+
 
   </body>
 
