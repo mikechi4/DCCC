@@ -1,8 +1,8 @@
 angular.module('myApp')
-  .controller('mainCtrl', function($scope, mainService){
+  .controller('mainCtrl', ($scope, mainService) => {
     $scope.getData = function(){
       mainService.getData().then(function(response){
-        $scope.data = response;
+        $scope.jobs = response;
         console.log($scope.data)
       })
     }

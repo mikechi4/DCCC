@@ -2,14 +2,30 @@
 <html ng-app="myApp">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>City of Seattle Wages</title>
   </head>
-  <body ng-controller="mainCtrl">
-    {{message}}
+  <body ng-controller="mainCtrl" class="container">
+    <div class="title-splash jumbotron">
+      <h2>City of Seattle Wages:  Comparison by Gender - All Job Classifications</h2>
+      <h6>Average pay comparison of male and female wages by job classification (except Library job classes)</h6>
+    </div>
+    <div class="main-content" ng-repeat="job in jobs">
+      Job Title: {{job[0]}} <br>
+      Female Avg Hourly Rate: ${{job[1]}} <br>
+      No. Female Employees: {{job[2]}}<br>
+      Avg of Female Months Employed in Position: {{job[3]}}<br>
+      Male Avg Hourly Rate: ${{job[4]}}<br>
+      No. Male Employees: {{job[5]}}<br>
+      Avg of Male Months Employed in Position: {{job[6]}}<br>
+      Total Avg Hrly Rate: ${{job[7]}}<br>
+      Total No. Empl: {{job[8]}}<br>
+      Total Average of Months Employed in Position: {{job[9]}}<br>
+      Ratio of women's hourly rate to men's hourly rate: {{job[10]}}% <br>
+      Notes: {{job[11]}} <br> <br>
+    </div>
   </body>
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
-  <script type="text/javascript" src="public/dist/all.js"></script>
-  <!-- <script type="text/javascript" src="js/app.js"></script>
-  <script type="text/javascript" src="js/controllers/mainCtrl.js"></script>
-  <script type="text/javascript" src="js/services/mainService.js"></script> -->
+  <script src="public/dist/all.js"></script>
 </html>
