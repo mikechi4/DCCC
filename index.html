@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
     <title>City of Seattle Wages</title>
   </head>
   <body ng-controller="mainCtrl" class="container">
@@ -10,22 +11,44 @@
       <h2>City of Seattle Wages:  Comparison by Gender - All Job Classifications</h2>
       <h6>Average pay comparison of male and female wages by job classification (except Library job classes)</h6>
     </div>
-    <div class="main-content" ng-repeat="job in jobs">
+    <nvd3 options="options" data="values"></nvd3>
+    <div class="main-content container" ng-repeat="job in jobs">
       Job Title: {{job[0]}} <br>
-      Female Avg Hourly Rate: ${{job[1]}} <br>
-      No. Female Employees: {{job[2]}}<br>
-      Avg of Female Months Employed in Position: {{job[3]}}<br>
-      Male Avg Hourly Rate: ${{job[4]}}<br>
-      No. Male Employees: {{job[5]}}<br>
-      Avg of Male Months Employed in Position: {{job[6]}}<br>
-      Total Avg Hrly Rate: ${{job[7]}}<br>
-      Total No. Empl: {{job[8]}}<br>
-      Total Average of Months Employed in Position: {{job[9]}}<br>
+      <table style="width:100%">
+        <tr>
+          <th>Description</th>
+          <th>Men</th>
+          <th>Women</th>
+          <th>Combined Avg</th>
+        </tr>
+        <tr>
+          <td>Avg Hourly Rate</td>
+          <td>${{job[4]}}</td>
+          <td>${{job[1]}}</td>
+          <td>${{job[7]}}<br></td>
+        </tr>
+        <tr>
+          <td>No. Employees</td>
+          <td>{{job[2]}}</td>
+          <td>{{job[5]}}</td>
+          <td>{{job[8]}}</td>
+        </tr>
+        <tr>
+          <td>Avg Months Employed</td>
+          <td>{{job[3]}}</td>
+          <td>{{job[6]}}</td>
+          <td>{{job[9]}}</td>
+        </tr>
+      </table> <br>
       Ratio of women's hourly rate to men's hourly rate: {{job[10]}}% <br>
       Notes: {{job[11]}} <br> <br>
     </div>
+
   </body>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.5/angular-nvd3.min.js"></script>
   <script src="public/dist/all.js"></script>
 </html>
