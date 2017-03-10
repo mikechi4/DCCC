@@ -43,6 +43,12 @@
       </table> <br>
       Ratio of women's hourly rate to men's hourly rate: {{job[10]}}% <br>
       Notes: {{job[11]}} <br> <br>
+      <div class="graph-section">
+        <div class="show-graph-btn">
+          <button type="button" ng-click="show = !show">Click Here to See Data</button>
+        </div>
+        <graph-directive job="job" ng-show="show"></graph-directive>
+      </div>
     </div>
     <ul uib-pagination total-items="jobs.length" ng-model="currentPage" items-per-page="pageSize" max-size="maxSize" force-ellipses="true"></ul>
   </body>
