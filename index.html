@@ -31,7 +31,7 @@
       <div class="main-content" ng-repeat="job in jobs | filter:searchText | startFrom: (currentPage - 1) * pageSize | limitTo: pageSize">
         <h4 class="main-content-job-title">Job Title: {{job[0]}}</h4>
         <table style="width:100%">
-          <tr>
+          <tr class="table-header">
             <th>Description</th>
             <th>Men</th>
             <th>Women</th>
