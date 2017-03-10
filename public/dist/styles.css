@@ -35,6 +35,8 @@ body {
   border-bottom: 1px solid black; }
   .main-content .main-content-job-title {
     text-align: center; }
+  .main-content .table-header {
+    border: 1px solid black; }
   .main-content .graph-section .show-graph-btn {
     text-align: center; }
   .main-content .graph-section .graph-directive-content .graph-directive-title {
