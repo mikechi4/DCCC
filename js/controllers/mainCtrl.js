@@ -1,84 +1,83 @@
-angular.module('myApp')
-  .controller('mainCtrl', ($scope, mainService) => {
+angular.module('myApp').controller('mainCtrl', function ($scope, mainService) {
 
-    const getAverageSalary = (arr, total) => {
-      var average = total / arr.length;
-      return average;
-    }
+  const getAverageSalary = function getAverageSalary(arr, total) {
+    const average = Math.round(total / arr.length * 100) / 100;
+    return average;
+  };
 
-    const getTotalSalary = (apiData) => {
-      const womenTotalSalary = [];
-      const menTotalSalary = [];
+  const getTotalSalary = function getTotalSalary(apiData, gender) {
+    const totalSalary = [];
 
-      apiData.forEach((index) => {
-        womenTotalSalary.push(index[1]);
-        menTotalSalary.push(index[4]);
+    apiData.forEach(function (index) {
+      if (gender === 'w') {
+        totalSalary.push(index[1]);
+      } else if (gender === 'm') {
+        totalSalary.push(index[4]);
+      } else {
+        return 'error';
+      }
+    });
+
+    var salarySum = 0;
+
+    salarySum = totalSalary.reduce(function (salarySum, sal) {
+      return salarySum + sal * 1;
+    }, 0);
+
+    const averageSal = getAverageSalary(totalSalary, salarySum);
+
+    return averageSal;
+  };
+  $scope.getData = function () {
+    mainService.getData().then(function (response) {
+      $scope.jobs = response;
+      $scope.womenAvgSal = getTotalSalary(response, 'w');
+      $scope.menAvgSal = getTotalSalary(response, 'm');
+      $scope.values[0].values.push({
+        "label":'Women Avg Salary',
+        "value": $scope.womenAvgSal
+      },
+      {
+        "label":'Men Avg Salary',
+        "value": $scope.menAvgSal
       })
-
-      var womenSalSum = 0;
-      var menSalSum = 0;
-      womenSalSum = womenTotalSalary.reduce((womenSalSum, sal) => {
-        return (womenSalSum + (sal * 1));
-      }, 0);
-      menSalSum = menTotalSalary.reduce((menSalSum, sal) => {
-        return (menSalSum + (sal * 1));
-      }, 0);
-
-      var womenAvg = getAverageSalary(womenTotalSalary, womenSalSum);
-      var menAvg = getAverageSalary(menTotalSalary, menSalSum);
-    }
-    $scope.getData = () => {
-      mainService.getData().then((response) => {
-        $scope.jobs = response;
-        getTotalSalary(response);
-      })
-    }
-    $scope.getData();
+    });
+  };
+  $scope.getData();
 
   $scope.options = {
-      chart: {
-        type: 'discreteBarChart',
-        height: 450,
-        margin : {
-          top: 20,
-          right: 20,
-          bottom: 50,
-          left: 55
-        },
-        x: function(d){return d.label;},
-        y: function(d){return d.value + (1e-10);},
-        showValues: true,
-        valueFormat: function(d){
-          return d3.format(',.4f')(d);
-        },
-        duration: 500,
-        xAxis: {
-          axisLabel: 'X Axis'
-        },
-        yAxis: {
-          axisLabel: 'Y Axis',
-          axisLabelDistance: 0
-        }
+    chart: {
+      type: 'discreteBarChart',
+      height: 450,
+      margin: {
+        top: 20,
+        right: 20,
+        bottom: 50,
+        left: 60
+      },
+      x: function x(d) {
+        return d.label;
+      },
+      y: function y(d) {
+        return d.value + 1e-10;
+      },
+      showValues: true,
+      valueFormat: function valueFormat(d) {
+        return d3.format(',.4f')(d);
+      },
+      duration: 500,
+      xAxis: {
+        axisLabel: 'Gender'
+      },
+      yAxis: {
+        axisLabel: '$ per Hour',
+        axisLabelDistance: 0
       }
-    };
+    }
+  };
 
-    $scope.values = [
-      {
-        key: "Cumulative Return",
-        values: [
-          {
-            "label" : "A" ,
-            "value" : 29.765957771107
-          } ,
-          {
-            "label" : "B" ,
-            "value" : 12
-          } ,
-          {
-            "label" : "C" ,
-            "value" : 32.807804682612
-          }
-        ]
-      }
-    ]
-  })
+  $scope.values = [{
+    key: "Cumulative Return",
+    values: []
+  }];
+});

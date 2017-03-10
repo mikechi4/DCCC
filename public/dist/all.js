@@ -6,35 +6,45 @@ angular.module('myApp', ['nvd3']);
 angular.module('myApp').controller('mainCtrl', function ($scope, mainService) {
 
   var getAverageSalary = function getAverageSalary(arr, total) {
-    var average = total / arr.length;
+    var average = Math.round(total / arr.length * 100) / 100;
     return average;
   };
 
-  var getTotalSalary = function getTotalSalary(apiData) {
-    var womenTotalSalary = [];
-    var menTotalSalary = [];
+  var getTotalSalary = function getTotalSalary(apiData, gender) {
+    var totalSalary = [];
 
     apiData.forEach(function (index) {
-      womenTotalSalary.push(index[1]);
-      menTotalSalary.push(index[4]);
+      if (gender === 'w') {
+        totalSalary.push(index[1]);
+      } else if (gender === 'm') {
+        totalSalary.push(index[4]);
+      } else {
+        return 'error';
+      }
     });
 
-    var womenSalSum = 0;
-    var menSalSum = 0;
-    womenSalSum = womenTotalSalary.reduce(function (womenSalSum, sal) {
-      return womenSalSum + sal * 1;
-    }, 0);
-    menSalSum = menTotalSalary.reduce(function (menSalSum, sal) {
-      return menSalSum + sal * 1;
+    var salarySum = 0;
+
+    salarySum = totalSalary.reduce(function (salarySum, sal) {
+      return salarySum + sal * 1;
     }, 0);
 
-    var womenAvg = getAverageSalary(womenTotalSalary, womenSalSum);
-    var menAvg = getAverageSalary(menTotalSalary, menSalSum);
+    var averageSal = getAverageSalary(totalSalary, salarySum);
+
+    return averageSal;
   };
   $scope.getData = function () {
     mainService.getData().then(function (response) {
       $scope.jobs = response;
-      getTotalSalary(response);
+      $scope.womenAvgSal = getTotalSalary(response, 'w');
+      $scope.menAvgSal = getTotalSalary(response, 'm');
+      $scope.values[0].values.push({
+        "label": 'Women Avg Salary',
+        "value": $scope.womenAvgSal
+      }, {
+        "label": 'Men Avg Salary',
+        "value": $scope.menAvgSal
+      });
     });
   };
   $scope.getData();
@@ -47,7 +57,7 @@ angular.module('myApp').controller('mainCtrl', function ($scope, mainService) {
         top: 20,
         right: 20,
         bottom: 50,
-        left: 55
+        left: 60
       },
       x: function x(d) {
         return d.label;
@@ -61,10 +71,10 @@ angular.module('myApp').controller('mainCtrl', function ($scope, mainService) {
       },
       duration: 500,
       xAxis: {
-        axisLabel: 'X Axis'
+        axisLabel: 'Gender'
       },
       yAxis: {
-        axisLabel: 'Y Axis',
+        axisLabel: '$ per Hour',
         axisLabelDistance: 0
       }
     }
@@ -72,16 +82,7 @@ angular.module('myApp').controller('mainCtrl', function ($scope, mainService) {
 
   $scope.values = [{
     key: "Cumulative Return",
-    values: [{
-      "label": "A",
-      "value": 29.765957771107
-    }, {
-      "label": "B",
-      "value": 12
-    }, {
-      "label": "C",
-      "value": 32.807804682612
-    }]
+    values: []
   }];
 });
 'use strict';
