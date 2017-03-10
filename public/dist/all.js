@@ -1,9 +1,22 @@
 'use strict';
 
-angular.module('myApp', ['nvd3']);
+angular.module('myApp', ['nvd3', 'ui.bootstrap']).filter('startFrom', function () {
+  return function (data, start) {
+    if (!data || !data.length) {
+      return;
+    }
+    start = +start; //parse to int
+    return data.slice(start);
+  };
+});
 'use strict';
 
 angular.module('myApp').controller('mainCtrl', function ($scope, mainService) {
+  // ------ Pagination Variables -----
+  $scope.pageSize = 10;
+  $scope.currentPage = 1;
+  $scope.maxSize = 5;
+  // ------ Pagination Variables -----
 
   var getAverageSalary = function getAverageSalary(arr, total) {
     var average = Math.round(total / arr.length * 100) / 100;
