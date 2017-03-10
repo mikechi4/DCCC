@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
+    <link rel="stylesheet" href="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
     <title>City of Seattle Wages</title>
   </head>
   <body ng-controller="mainCtrl" class="container">
@@ -12,7 +13,7 @@
       <h6>Average pay comparison of male and female wages by job classification (except Library job classes)</h6>
     </div>
     <nvd3 options="options" data="values"></nvd3>
-    <div class="main-content container" ng-repeat="job in jobs">
+    <div class="main-content container" ng-repeat="job in jobs | startFrom: (currentPage - 1) * pageSize | limitTo: pageSize">
       Job Title: {{job[0]}} <br>
       <table style="width:100%">
         <tr>
@@ -43,12 +44,13 @@
       Ratio of women's hourly rate to men's hourly rate: {{job[10]}}% <br>
       Notes: {{job[11]}} <br> <br>
     </div>
-
+    <ul uib-pagination total-items="jobs.length" ng-model="currentPage" items-per-page="pageSize" max-size="maxSize" force-ellipses="true"></ul>
   </body>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.5/angular-nvd3.min.js"></script>
+  <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
   <script src="public/dist/all.js"></script>
 </html>

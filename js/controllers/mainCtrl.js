@@ -1,5 +1,10 @@
 angular.module('myApp').controller('mainCtrl', function ($scope, mainService) {
-
+  // ------ Pagination Variables -----
+  $scope.pageSize = 10;
+  $scope.currentPage = 1;
+  $scope.maxSize = 5;
+  // ------ Pagination Variables -----
+  
   const getAverageSalary = function getAverageSalary(arr, total) {
     const average = Math.round(total / arr.length * 100) / 100;
     return average;
