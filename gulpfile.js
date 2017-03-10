@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
-
+const babel = require('gulp-babel');
 
 const paths = {
     jsSource: ['./app.js', './js/**/*.js'],
