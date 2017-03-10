@@ -1,0 +1,46 @@
+body{
+  // background: #ECE2D0;
+}
+.title-splash{
+
+}
+
+.cumulative-total{
+  margin-bottom: 20px;
+  border: 1px solid black;
+  .cumulative-total-title{
+    text-align: center;
+  }
+}
+
+.job-search{
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  .job-search-title{}
+  .job-search-box{}
+}
+
+.main-content{
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+  .main-content-job-title{
+    text-align: center;
+  }
+  .graph-section{
+    .show-graph-btn{
+      text-align: center;
+    }
+    .graph-directive-content{
+      .graph-directive-title{
+        text-align: center;
+      }
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
